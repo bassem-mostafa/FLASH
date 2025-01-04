@@ -1,0 +1,9 @@
+[submodule "port/Stub"]
+	path = port/Stub
+	url = https://github.com/bassem-mostafa/FLASH_Stub.git
+[submodule "port/Power_Analyzer"]
+	path = port/Power_Analyzer
+	url = https://github.com/bassem-mostafa/FLASH_Power_Analyzer.git
+[submodule "port/Flow_Meter"]
+	path = port/Flow_Meter
+	url = https://github.com/bassem-mostafa/FLASH_Flow_Meter.git
