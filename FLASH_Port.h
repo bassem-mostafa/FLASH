@@ -36,22 +36,22 @@
 // #### File Guard #############################################################
 // #############################################################################
 
-#ifndef EEPROM_PORT_H_
-    #define EEPROM_PORT_H_
+#ifndef FLASH_PORT_H_
+    #define FLASH_PORT_H_
 
 // #############################################################################
 // #### Include(s) #############################################################
 // #############################################################################
 
-    #if defined( EEPROM_FLOW_METER )
-        #include "port/Flow_Meter/EEPROM_Flow_Meter_Port.h"
-    #elif defined( EEPROM_POWER_ANALYZER )
-        #include "port/Power_Analyzer/EEPROM_Power_Analyzer_Port.h"
+    #if defined( FLASH_FLOW_METER )
+        #include "port/Flow_Meter/FLASH_Flow_Meter_Port.h"
+    #elif defined( FLASH_POWER_ANALYZER )
+        #include "port/Power_Analyzer/FLASH_Power_Analyzer_Port.h"
     #else
-        #ifndef EEPROM_STUB
-            #define EEPROM_STUB
+        #ifndef FLASH_STUB
+            #define FLASH_STUB
         #endif
-        #include "port/Stub/EEPROM_Stub_Port.h"
+        #include "port/Stub/FLASH_Stub_Port.h"
     #endif
 
 // #############################################################################
@@ -74,7 +74,7 @@
 // #### File Guard #############################################################
 // #############################################################################
 
-#endif /* EEPROM_PORT_H_ */
+#endif /* FLASH_PORT_H_ */
 
 // #############################################################################
 // #### END OF FILE ############################################################

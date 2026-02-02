@@ -110,8 +110,6 @@ extern "C"
     FLASH_Status_t FLASH_Instance_Cycle( FLASH_Instance_t * Instance );
     FLASH_Status_t FLASH_Instance_DeInitialize( FLASH_Instance_t * Instance );
 
-    // TODO Add More APIs
-
     // #############################################################################
     // #### Public Variable(s) #####################################################
     // #############################################################################

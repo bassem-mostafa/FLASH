@@ -48,8 +48,8 @@
 // #### Include(s) #############################################################
 // #############################################################################
 
-#include "EEPROM.h"
-#include "EEPROM_Internal.h"
+#include "FLASH.h"
+#include "FLASH_Internal.h"
 
 // #############################################################################
 // #### Private Macro(s) #######################################################
@@ -59,66 +59,66 @@
 // #### Private Type(s) ########################################################
 // #############################################################################
 
-typedef struct EEPROM_Context
+typedef struct FLASH_Context
 {
-    EEPROM_Instance_t Instance[ EEPROM_Count ];
-} EEPROM_Context_t;
+    FLASH_Instance_t Instance[ FLASH_Count ];
+} FLASH_Context_t;
 
 // #############################################################################
 // #### Private Method(s) Prototype ############################################
 // #############################################################################
 
-static EEPROM_Status_t EEPROM_Context_Initialize( void );
-static EEPROM_Status_t EEPROM_Context_Cycle( void );
-static EEPROM_Status_t EEPROM_Context_DeInitialize( void );
+static FLASH_Status_t FLASH_Context_Initialize( void );
+static FLASH_Status_t FLASH_Context_Cycle( void );
+static FLASH_Status_t FLASH_Context_DeInitialize( void );
 
 // #############################################################################
 // #### Private Variable(s) ####################################################
 // #############################################################################
 
-static EEPROM_Context_t EEPROM_Context;
+static FLASH_Context_t FLASH_Context;
 
 // #############################################################################
 // #### Private Method(s) ######################################################
 // #############################################################################
 
-static EEPROM_Status_t EEPROM_Context_Initialize( void )
+static FLASH_Status_t FLASH_Context_Initialize( void )
 {
-    EEPROM_Status_t Status = EEPROM_Status_Error;
+    FLASH_Status_t Status = FLASH_Status_Error;
     do
     {
-        EEPROM_Trace( "%s( void )", __FUNCTION__ );
-        for ( EEPROM_t EEPROM_x = EEPROM_Null; EEPROM_x < EEPROM_Count; ++EEPROM_x )
+        FLASH_Trace( "%s( void )", __FUNCTION__ );
+        for ( FLASH_t FLASH_x = FLASH_Null; FLASH_x < FLASH_Count; ++FLASH_x )
         {
-            EEPROM_Context.Instance[ EEPROM_x ].EEPROMx = EEPROM_x;
+            FLASH_Context.Instance[ FLASH_x ].FLASHx = FLASH_x;
         }
-        Status = EEPROM_Status_Success;
+        Status = FLASH_Status_Success;
     }
     while ( 0 );
     return Status;
 }
 
-static EEPROM_Status_t EEPROM_Context_Cycle( void )
+static FLASH_Status_t FLASH_Context_Cycle( void )
 {
-    EEPROM_Status_t Status = EEPROM_Status_Error;
+    FLASH_Status_t Status = FLASH_Status_Error;
     do
     {
-        EEPROM_Trace( "%s( void )", __FUNCTION__ );
+        FLASH_Trace( "%s( void )", __FUNCTION__ );
 
-        Status = EEPROM_Status_Success;
+        Status = FLASH_Status_Success;
     }
     while ( 0 );
     return Status;
 }
 
-static EEPROM_Status_t EEPROM_Context_DeInitialize( void )
+static FLASH_Status_t FLASH_Context_DeInitialize( void )
 {
-    EEPROM_Status_t Status = EEPROM_Status_Error;
+    FLASH_Status_t Status = FLASH_Status_Error;
     do
     {
-        EEPROM_Trace( "%s( void )", __FUNCTION__ );
+        FLASH_Trace( "%s( void )", __FUNCTION__ );
 
-        Status = EEPROM_Status_Success;
+        Status = FLASH_Status_Success;
     }
     while ( 0 );
     return Status;
@@ -128,35 +128,35 @@ static EEPROM_Status_t EEPROM_Context_DeInitialize( void )
 // #### Public Method(s) #######################################################
 // #############################################################################
 
-EEPROM_Status_t EEPROM_Initialize( EEPROM_t EEPROMx )
+FLASH_Status_t FLASH_Initialize( FLASH_t FLASHx )
 {
-    EEPROM_Status_t Status = EEPROM_Status_Error;
+    FLASH_Status_t Status = FLASH_Status_Error;
 
     do
     {
-        EEPROM_Trace( "%s( EEPROMx=%d )", __FUNCTION__, EEPROMx );
+        FLASH_Trace( "%s( FLASHx=%d )", __FUNCTION__, FLASHx );
 
-        if ( ( Status = EEPROM_IsValid( EEPROMx ) ) != EEPROM_Status_Success )
+        if ( ( Status = FLASH_IsValid( FLASHx ) ) != FLASH_Status_Success )
         {
             break;
         }
 
-        if ( ( Status = EEPROM_Context_Initialize( ) ) != EEPROM_Status_Success )
+        if ( ( Status = FLASH_Context_Initialize( ) ) != FLASH_Status_Success )
         {
             break;
         }
 
-        for ( EEPROM_t EEPROM_x = EEPROM_Null; EEPROM_x < EEPROM_Count; ++EEPROM_x )
+        for ( FLASH_t FLASH_x = FLASH_Null; FLASH_x < FLASH_Count; ++FLASH_x )
         {
-            if ( EEPROMx != EEPROM_All && EEPROMx != EEPROM_x )
+            if ( FLASHx != FLASH_All && FLASHx != FLASH_x )
             {
                 continue;
             }
 
-            EEPROM_Status_t EEPROM_Status = EEPROM_Status_Success;
-            if ( ( EEPROM_Status = EEPROM_Instance_Initialize( &EEPROM_Context.Instance[ EEPROM_x ] ) ) != EEPROM_Status_Success )
+            FLASH_Status_t FLASH_Status = FLASH_Status_Success;
+            if ( ( FLASH_Status = FLASH_Instance_Initialize( &FLASH_Context.Instance[ FLASH_x ] ) ) != FLASH_Status_Success )
             {
-                Status = EEPROM_Status;
+                Status = FLASH_Status;
             }
         }
     }
@@ -165,35 +165,35 @@ EEPROM_Status_t EEPROM_Initialize( EEPROM_t EEPROMx )
     return Status;
 }
 
-EEPROM_Status_t EEPROM_Cycle( EEPROM_t EEPROMx )
+FLASH_Status_t FLASH_Cycle( FLASH_t FLASHx )
 {
-    EEPROM_Status_t Status = EEPROM_Status_Error;
+    FLASH_Status_t Status = FLASH_Status_Error;
 
     do
     {
-        EEPROM_Trace( "%s( EEPROMx=%d )", __FUNCTION__, EEPROMx );
+        FLASH_Trace( "%s( FLASHx=%d )", __FUNCTION__, FLASHx );
 
-        if ( ( Status = EEPROM_IsValid( EEPROMx ) ) != EEPROM_Status_Success )
+        if ( ( Status = FLASH_IsValid( FLASHx ) ) != FLASH_Status_Success )
         {
             break;
         }
 
-        if ( ( Status = EEPROM_Context_Cycle( ) ) != EEPROM_Status_Success )
+        if ( ( Status = FLASH_Context_Cycle( ) ) != FLASH_Status_Success )
         {
             break;
         }
 
-        for ( EEPROM_t EEPROM_x = EEPROM_Null; EEPROM_x < EEPROM_Count; ++EEPROM_x )
+        for ( FLASH_t FLASH_x = FLASH_Null; FLASH_x < FLASH_Count; ++FLASH_x )
         {
-            if ( EEPROMx != EEPROM_All && EEPROMx != EEPROM_x )
+            if ( FLASHx != FLASH_All && FLASHx != FLASH_x )
             {
                 continue;
             }
 
-            EEPROM_Status_t EEPROM_Status = EEPROM_Status_Success;
-            if ( ( EEPROM_Status = EEPROM_Instance_Cycle( &EEPROM_Context.Instance[ EEPROM_x ] ) ) != EEPROM_Status_Success )
+            FLASH_Status_t FLASH_Status = FLASH_Status_Success;
+            if ( ( FLASH_Status = FLASH_Instance_Cycle( &FLASH_Context.Instance[ FLASH_x ] ) ) != FLASH_Status_Success )
             {
-                Status = EEPROM_Status;
+                Status = FLASH_Status;
             }
         }
     }
@@ -202,69 +202,69 @@ EEPROM_Status_t EEPROM_Cycle( EEPROM_t EEPROMx )
     return Status;
 }
 
-EEPROM_Status_t EEPROM_DeInitialize( EEPROM_t EEPROMx )
+FLASH_Status_t FLASH_DeInitialize( FLASH_t FLASHx )
 {
-    EEPROM_Status_t Status = EEPROM_Status_Error;
+    FLASH_Status_t Status = FLASH_Status_Error;
 
     do
     {
-        EEPROM_Trace( "%s( EEPROMx=%d )", __FUNCTION__, EEPROMx );
+        FLASH_Trace( "%s( FLASHx=%d )", __FUNCTION__, FLASHx );
 
-        if ( ( Status = EEPROM_IsValid( EEPROMx ) ) != EEPROM_Status_Success )
+        if ( ( Status = FLASH_IsValid( FLASHx ) ) != FLASH_Status_Success )
         {
             break;
         }
 
-        for ( EEPROM_t EEPROM_x = EEPROM_Null; EEPROM_x < EEPROM_Count; ++EEPROM_x )
+        for ( FLASH_t FLASH_x = FLASH_Null; FLASH_x < FLASH_Count; ++FLASH_x )
         {
-            if ( EEPROMx != EEPROM_All && EEPROMx != EEPROM_x )
+            if ( FLASHx != FLASH_All && FLASHx != FLASH_x )
             {
                 continue;
             }
 
-            EEPROM_Status_t EEPROM_Status = EEPROM_Status_Success;
-            if ( ( EEPROM_Status = EEPROM_Instance_DeInitialize( &EEPROM_Context.Instance[ EEPROM_x ] ) ) != EEPROM_Status_Success )
+            FLASH_Status_t FLASH_Status = FLASH_Status_Success;
+            if ( ( FLASH_Status = FLASH_Instance_DeInitialize( &FLASH_Context.Instance[ FLASH_x ] ) ) != FLASH_Status_Success )
             {
-                Status = EEPROM_Status;
+                Status = FLASH_Status;
             }
         }
 
-        Status = EEPROM_Context_DeInitialize( );
+        Status = FLASH_Context_DeInitialize( );
     }
     while ( 0 );
 
     return Status;
 }
 
-EEPROM_Status_t EEPROM_Write( EEPROM_t EEPROMx, EEPROM_Address_t Address, EEPROM_Data_t * Data, EEPROM_DataLength_t DataLength )
+FLASH_Status_t FLASH_Write( FLASH_t FLASHx, FLASH_Address_t Address, FLASH_Data_t * Data, FLASH_DataLength_t DataLength )
 {
-    EEPROM_Status_t Status = EEPROM_Status_Error;
+    FLASH_Status_t Status = FLASH_Status_Error;
     do
     {
-        EEPROM_Trace( "%s( EEPROM=%d, Address=%08X, Data=%p, Length=%d )", __FUNCTION__, EEPROMx, Address, Data, DataLength );
-        if ( ( Status = EEPROM_IsValid( EEPROMx ) ) != EEPROM_Status_Success )
+        FLASH_Trace( "%s( FLASH=%d, Address=%08X, Data=%p, Length=%d )", __FUNCTION__, FLASHx, Address, Data, DataLength );
+        if ( ( Status = FLASH_IsValid( FLASHx ) ) != FLASH_Status_Success )
         {
             break;
         }
-        EEPROM_Instance_t * Instance = &EEPROM_Context.Instance[ EEPROMx ];
-        Status = EEPROM_Instance_Write( Instance, Address, Data, DataLength );
+        FLASH_Instance_t * Instance = &FLASH_Context.Instance[ FLASHx ];
+        Status = FLASH_Instance_Write( Instance, Address, Data, DataLength );
     }
     while ( 0 );
     return Status;
 }
 
-EEPROM_Status_t EEPROM_Read( EEPROM_t EEPROMx, EEPROM_Address_t Address, EEPROM_Data_t * Data, EEPROM_DataLength_t DataLength )
+FLASH_Status_t FLASH_Read( FLASH_t FLASHx, FLASH_Address_t Address, FLASH_Data_t * Data, FLASH_DataLength_t DataLength )
 {
-    EEPROM_Status_t Status = EEPROM_Status_Error;
+    FLASH_Status_t Status = FLASH_Status_Error;
     do
     {
-        EEPROM_Trace( "%s( EEPROM=%d, Address=%08X, Data=%p, Length=%d )", __FUNCTION__, EEPROMx, Address, Data, DataLength );
-        if ( ( Status = EEPROM_IsValid( EEPROMx ) ) != EEPROM_Status_Success )
+        FLASH_Trace( "%s( FLASH=%d, Address=%08X, Data=%p, Length=%d )", __FUNCTION__, FLASHx, Address, Data, DataLength );
+        if ( ( Status = FLASH_IsValid( FLASHx ) ) != FLASH_Status_Success )
         {
             break;
         }
-        EEPROM_Instance_t * Instance = &EEPROM_Context.Instance[ EEPROMx ];
-        Status = EEPROM_Instance_Read( Instance, Address, Data, DataLength );
+        FLASH_Instance_t * Instance = &FLASH_Context.Instance[ FLASHx ];
+        Status = FLASH_Instance_Read( Instance, Address, Data, DataLength );
     }
     while ( 0 );
     return Status;
@@ -274,7 +274,7 @@ EEPROM_Status_t EEPROM_Read( EEPROM_t EEPROMx, EEPROM_Address_t Address, EEPROM_
 // #### Public Variable(s) #####################################################
 // #############################################################################
 
-const char EEPROM_VERSION[] = "0.0.0.v20260117-1054";
+const char FLASH_VERSION[] = "0.0.0.v20260202-1914";
 
 // #############################################################################
 // #### File Guard #############################################################
