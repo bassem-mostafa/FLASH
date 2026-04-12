@@ -87,7 +87,7 @@ extern "C"
     // #### Public Type(s) #########################################################
     // #############################################################################
 
-    typedef struct FLASH_Instance_Context_t FLASH_Instance_Context_t;
+    typedef struct FLASH_InstanceContext_t FLASH_InstanceContext_t;
 
     typedef struct FLASH_Instance
     {
@@ -95,7 +95,7 @@ extern "C"
 
         union
         {
-            FLASH_Instance_Context_t * Context;
+            FLASH_InstanceContext_t * Context;
         };
     } FLASH_Instance_t;
 
