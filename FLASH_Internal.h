@@ -110,6 +110,9 @@ extern "C"
     FLASH_Status_t FLASH_Instance_Cycle( FLASH_Instance_t * Instance );
     FLASH_Status_t FLASH_Instance_DeInitialize( FLASH_Instance_t * Instance );
 
+    FLASH_Status_t FLASH_Instance_Write( FLASH_Instance_t * Instance, FLASH_Address_t Address, FLASH_Data_t * Data, FLASH_DataLength_t DataLength );
+    FLASH_Status_t FLASH_Instance_Read( FLASH_Instance_t * Instance, FLASH_Address_t Address, FLASH_Data_t * Data, FLASH_DataLength_t DataLength );
+
     // #############################################################################
     // #### Public Variable(s) #####################################################
     // #############################################################################
