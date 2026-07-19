@@ -61,7 +61,6 @@
 
 typedef struct FLASH_Context
 {
-    FLASH_Instance_t Instance[ FLASH_Count ];
 } FLASH_Context_t;
 
 // #############################################################################
@@ -84,43 +83,46 @@ static FLASH_Context_t FLASH_Context;
 
 static FLASH_Status_t FLASH_Context_Initialize( void )
 {
-    FLASH_Status_t Status = FLASH_Status_Error;
+    FLASH_Status_t Status = FLASH_Status_Success;
+
     do
     {
         FLASH_Trace( "%s( void )", __FUNCTION__ );
-        for ( FLASH_t FLASH_x = FLASH_Null; FLASH_x < FLASH_Count; ++FLASH_x )
-        {
-            FLASH_Context.Instance[ FLASH_x ].FLASHx = FLASH_x;
-        }
-        Status = FLASH_Status_Success;
+
+        UTIL_UNUSED( FLASH_Context );
     }
     while ( 0 );
+
     return Status;
 }
 
 static FLASH_Status_t FLASH_Context_Cycle( void )
 {
-    FLASH_Status_t Status = FLASH_Status_Error;
+    FLASH_Status_t Status = FLASH_Status_Success;
+
     do
     {
         FLASH_Trace( "%s( void )", __FUNCTION__ );
 
-        Status = FLASH_Status_Success;
+        UTIL_UNUSED( FLASH_Context );
     }
     while ( 0 );
+
     return Status;
 }
 
 static FLASH_Status_t FLASH_Context_DeInitialize( void )
 {
-    FLASH_Status_t Status = FLASH_Status_Error;
+    FLASH_Status_t Status = FLASH_Status_Success;
+
     do
     {
         FLASH_Trace( "%s( void )", __FUNCTION__ );
 
-        Status = FLASH_Status_Success;
+        UTIL_UNUSED( FLASH_Context );
     }
     while ( 0 );
+
     return Status;
 }
 
@@ -130,31 +132,23 @@ static FLASH_Status_t FLASH_Context_DeInitialize( void )
 
 FLASH_Status_t FLASH_Initialize( FLASH_t FLASHx )
 {
-    FLASH_Status_t Status = FLASH_Status_Error;
+    FLASH_Status_t Status = FLASH_Status_Success;
+    FLASH_Status_t FLASH_Status = FLASH_Status_Success;
 
     do
     {
         FLASH_Trace( "%s( FLASHx=%d )", __FUNCTION__, FLASHx );
-
-        if ( ( Status = FLASH_IsValid( FLASHx ) ) != FLASH_Status_Success )
-        {
-            break;
-        }
 
         if ( ( Status = FLASH_Context_Initialize( ) ) != FLASH_Status_Success )
         {
             break;
         }
 
-        for ( FLASH_t FLASH_x = FLASH_Null; FLASH_x < FLASH_Count; ++FLASH_x )
+        FLASH_t FLASH_start = ( FLASHx == FLASH_All ? FLASH_Null : FLASHx );
+        FLASH_t FLASH_end = ( FLASHx == FLASH_All ? FLASH_Count : FLASHx + 1 );
+        for ( FLASH_t FLASH_x = FLASH_start; FLASH_x < FLASH_end; ++FLASH_x )
         {
-            if ( FLASHx != FLASH_All && FLASHx != FLASH_x )
-            {
-                continue;
-            }
-
-            FLASH_Status_t FLASH_Status = FLASH_Status_Success;
-            if ( ( FLASH_Status = FLASH_Instance_Initialize( &FLASH_Context.Instance[ FLASH_x ] ) ) != FLASH_Status_Success )
+            if ( ( FLASH_Status = FLASH_Port_Initialize( FLASH_x ) ) != FLASH_Status_Success )
             {
                 Status = FLASH_Status;
             }
@@ -167,31 +161,23 @@ FLASH_Status_t FLASH_Initialize( FLASH_t FLASHx )
 
 FLASH_Status_t FLASH_Cycle( FLASH_t FLASHx )
 {
-    FLASH_Status_t Status = FLASH_Status_Error;
+    FLASH_Status_t Status = FLASH_Status_Success;
+    FLASH_Status_t FLASH_Status = FLASH_Status_Success;
 
     do
     {
         FLASH_Trace( "%s( FLASHx=%d )", __FUNCTION__, FLASHx );
-
-        if ( ( Status = FLASH_IsValid( FLASHx ) ) != FLASH_Status_Success )
-        {
-            break;
-        }
 
         if ( ( Status = FLASH_Context_Cycle( ) ) != FLASH_Status_Success )
         {
             break;
         }
 
-        for ( FLASH_t FLASH_x = FLASH_Null; FLASH_x < FLASH_Count; ++FLASH_x )
+        FLASH_t FLASH_start = ( FLASHx == FLASH_All ? FLASH_Null : FLASHx );
+        FLASH_t FLASH_end = ( FLASHx == FLASH_All ? FLASH_Count : FLASHx + 1 );
+        for ( FLASH_t FLASH_x = FLASH_start; FLASH_x < FLASH_end; ++FLASH_x )
         {
-            if ( FLASHx != FLASH_All && FLASHx != FLASH_x )
-            {
-                continue;
-            }
-
-            FLASH_Status_t FLASH_Status = FLASH_Status_Success;
-            if ( ( FLASH_Status = FLASH_Instance_Cycle( &FLASH_Context.Instance[ FLASH_x ] ) ) != FLASH_Status_Success )
+            if ( ( FLASH_Status = FLASH_Port_Cycle( FLASH_x ) ) != FLASH_Status_Success )
             {
                 Status = FLASH_Status;
             }
@@ -204,32 +190,27 @@ FLASH_Status_t FLASH_Cycle( FLASH_t FLASHx )
 
 FLASH_Status_t FLASH_DeInitialize( FLASH_t FLASHx )
 {
-    FLASH_Status_t Status = FLASH_Status_Error;
+    FLASH_Status_t Status = FLASH_Status_Success;
+    FLASH_Status_t FLASH_Status = FLASH_Status_Success;
 
     do
     {
         FLASH_Trace( "%s( FLASHx=%d )", __FUNCTION__, FLASHx );
 
-        if ( ( Status = FLASH_IsValid( FLASHx ) ) != FLASH_Status_Success )
+        FLASH_t FLASH_start = ( FLASHx == FLASH_All ? FLASH_Null : FLASHx );
+        FLASH_t FLASH_end = ( FLASHx == FLASH_All ? FLASH_Count : FLASHx + 1 );
+        for ( FLASH_t FLASH_x = FLASH_start; FLASH_x < FLASH_end; ++FLASH_x )
         {
-            break;
-        }
-
-        for ( FLASH_t FLASH_x = FLASH_Null; FLASH_x < FLASH_Count; ++FLASH_x )
-        {
-            if ( FLASHx != FLASH_All && FLASHx != FLASH_x )
-            {
-                continue;
-            }
-
-            FLASH_Status_t FLASH_Status = FLASH_Status_Success;
-            if ( ( FLASH_Status = FLASH_Instance_DeInitialize( &FLASH_Context.Instance[ FLASH_x ] ) ) != FLASH_Status_Success )
+            if ( ( FLASH_Status = FLASH_Port_DeInitialize( FLASH_x ) ) != FLASH_Status_Success )
             {
                 Status = FLASH_Status;
             }
         }
 
-        Status = FLASH_Context_DeInitialize( );
+        if ( ( Status = FLASH_Context_DeInitialize( ) ) != FLASH_Status_Success )
+        {
+            break;
+        }
     }
     while ( 0 );
 
@@ -238,35 +219,75 @@ FLASH_Status_t FLASH_DeInitialize( FLASH_t FLASHx )
 
 FLASH_Status_t FLASH_Write( FLASH_t FLASHx, FLASH_Address_t Address, FLASH_Data_t * Data, FLASH_DataLength_t DataLength )
 {
-    FLASH_Status_t Status = FLASH_Status_Error;
+    FLASH_Status_t Status = FLASH_Status_Success;
+    FLASH_Status_t FLASH_Status = FLASH_Status_Success;
+
     do
     {
-        FLASH_Trace( "%s( FLASH=%d, Address=%08X, Data=%p, Length=%d )", __FUNCTION__, FLASHx, Address, Data, DataLength );
-        if ( ( Status = FLASH_IsValid( FLASHx ) ) != FLASH_Status_Success )
+        FLASH_Trace( "%s( FLASHx=%d )", __FUNCTION__, FLASHx );
+
+        if ( Data == NULL || DataLength < 1 )
         {
+            Status = FLASH_Status_ArgumentInvalid;
             break;
         }
-        FLASH_Instance_t * Instance = &FLASH_Context.Instance[ FLASHx ];
-        Status = FLASH_Instance_Write( Instance, Address, Data, DataLength );
+
+        if ( FLASHx == FLASH_All )
+        {
+            // FIXME Is it required to define a criteria to write FLASH on all peripherals ?
+            Status = FLASH_Status_NotSupported;
+            break;
+        }
+
+        FLASH_t FLASH_start = ( FLASHx == FLASH_All ? FLASH_Null : FLASHx );
+        FLASH_t FLASH_end = ( FLASHx == FLASH_All ? FLASH_Count : FLASHx + 1 );
+        for ( FLASH_t FLASH_x = FLASH_start; FLASH_x < FLASH_end; ++FLASH_x )
+        {
+            if ( ( FLASH_Status = FLASH_Port_Write( FLASH_x, Address, Data, DataLength ) ) != FLASH_Status_Success )
+            {
+                Status = FLASH_Status;
+            }
+        }
     }
     while ( 0 );
+
     return Status;
 }
 
 FLASH_Status_t FLASH_Read( FLASH_t FLASHx, FLASH_Address_t Address, FLASH_Data_t * Data, FLASH_DataLength_t DataLength )
 {
-    FLASH_Status_t Status = FLASH_Status_Error;
+    FLASH_Status_t Status = FLASH_Status_Success;
+    FLASH_Status_t FLASH_Status = FLASH_Status_Success;
+
     do
     {
-        FLASH_Trace( "%s( FLASH=%d, Address=%08X, Data=%p, Length=%d )", __FUNCTION__, FLASHx, Address, Data, DataLength );
-        if ( ( Status = FLASH_IsValid( FLASHx ) ) != FLASH_Status_Success )
+        FLASH_Trace( "%s( FLASHx=%d )", __FUNCTION__, FLASHx );
+
+        if ( Data == NULL || DataLength < 1 )
         {
+            Status = FLASH_Status_ArgumentInvalid;
             break;
         }
-        FLASH_Instance_t * Instance = &FLASH_Context.Instance[ FLASHx ];
-        Status = FLASH_Instance_Read( Instance, Address, Data, DataLength );
+
+        if ( FLASHx == FLASH_All )
+        {
+            // FIXME Is it required to define a criteria to read FLASH on all peripherals ?
+            Status = FLASH_Status_NotSupported;
+            break;
+        }
+
+        FLASH_t FLASH_start = ( FLASHx == FLASH_All ? FLASH_Null : FLASHx );
+        FLASH_t FLASH_end = ( FLASHx == FLASH_All ? FLASH_Count : FLASHx + 1 );
+        for ( FLASH_t FLASH_x = FLASH_start; FLASH_x < FLASH_end; ++FLASH_x )
+        {
+            if ( ( FLASH_Status = FLASH_Port_Read( FLASH_x, Address, Data, DataLength ) ) != FLASH_Status_Success )
+            {
+                Status = FLASH_Status;
+            }
+        }
     }
     while ( 0 );
+
     return Status;
 }
 
@@ -274,7 +295,7 @@ FLASH_Status_t FLASH_Read( FLASH_t FLASHx, FLASH_Address_t Address, FLASH_Data_t
 // #### Public Variable(s) #####################################################
 // #############################################################################
 
-const char FLASH_VERSION[] = "0.0.0.v20260416-2335";
+const char FLASH_VERSION[] = "0.0.0.v20260719-2341";
 
 // #############################################################################
 // #### File Guard #############################################################

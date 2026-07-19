@@ -48,7 +48,8 @@ extern "C"
     // #### Include(s) #############################################################
     // #############################################################################
 
-    #include "FLASH_Port.h"
+    #include "FLASH.h"
+    #include "driver/STM32L496VGT6P/FLASH_STM32L496VGT6P.h"
 
     // #############################################################################
     // #### Public Macro(s) ########################################################
@@ -87,15 +88,20 @@ extern "C"
     // #### Public Type(s) #########################################################
     // #############################################################################
 
-    typedef struct FLASH_InstanceContext_t FLASH_InstanceContext_t;
+    typedef enum FLASH_Type
+    {
+        FLASH_Type_Unknown = 0,
+        FLASH_Type_Null,
+        FLASH_Type_STM32L496VGT6P,
+    } FLASH_Type_t;
 
     typedef struct FLASH_Instance
     {
-        FLASH_t FLASHx;
+        FLASH_Type_t Type;
 
         union
         {
-            FLASH_InstanceContext_t * Context;
+            FLASH_STM32L496VGT6P_t STM32L496VGT6Px;
         };
     } FLASH_Instance_t;
 
@@ -104,14 +110,12 @@ extern "C"
     // #############################################################################
 
     // The following APIs MUST be provided by the port
-    FLASH_Status_t FLASH_IsValid( FLASH_t FLASHx );
+    FLASH_Status_t FLASH_Port_Initialize( FLASH_t FLASHx );
+    FLASH_Status_t FLASH_Port_Cycle( FLASH_t FLASHx );
+    FLASH_Status_t FLASH_Port_DeInitialize( FLASH_t FLASHx );
 
-    FLASH_Status_t FLASH_Instance_Initialize( FLASH_Instance_t * Instance );
-    FLASH_Status_t FLASH_Instance_Cycle( FLASH_Instance_t * Instance );
-    FLASH_Status_t FLASH_Instance_DeInitialize( FLASH_Instance_t * Instance );
-
-    FLASH_Status_t FLASH_Instance_Write( FLASH_Instance_t * Instance, FLASH_Address_t Address, FLASH_Data_t * Data, FLASH_DataLength_t DataLength );
-    FLASH_Status_t FLASH_Instance_Read( FLASH_Instance_t * Instance, FLASH_Address_t Address, FLASH_Data_t * Data, FLASH_DataLength_t DataLength );
+    FLASH_Status_t FLASH_Port_Write( FLASH_t FLASHx, FLASH_Address_t Address, FLASH_Data_t * Data, FLASH_DataLength_t DataLength );
+    FLASH_Status_t FLASH_Port_Read( FLASH_t FLASHx, FLASH_Address_t Address, FLASH_Data_t * Data, FLASH_DataLength_t DataLength );
 
     // #############################################################################
     // #### Public Variable(s) #####################################################

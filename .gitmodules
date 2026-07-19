@@ -7,3 +7,6 @@
 [submodule "port/Flow_Meter"]
 	path = port/Flow_Meter
 	url = https://github.com/bassem-mostafa/FLASH_Flow_Meter.git
+[submodule "driver/STM32L496VGT6P"]
+	path = driver/STM32L496VGT6P
+	url = https://github.com/bassem-mostafa/FLASH_STM32L496VGT6P.git
